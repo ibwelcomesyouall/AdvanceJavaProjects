@@ -1,0 +1,17 @@
+<!DOCTYPE beans PUBLIC "-//SPRING/DTD BEAN//EN"
+"http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+    <bean id = "e1" class = "beans.Engine">
+    <property name="modelyear" value="2015"/>
+    </bean>
+    
+    <bean id = "e2" class = "beans.Engine" autowire-candidate="false">
+    <property name="modelyear" value="2013"/>
+    </bean>
+    
+    <bean id = "c" class = "beans.Car" autowire="byType"> 
+    <!-- For autowiring no need for use the below statement -->
+       <!--  <property name="engine" ref="e1"/> -->
+    </bean>
+    
+</beans>

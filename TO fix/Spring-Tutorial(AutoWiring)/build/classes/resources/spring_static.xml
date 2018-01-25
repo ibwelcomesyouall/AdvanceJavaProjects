@@ -1,0 +1,14 @@
+<!DOCTYPE beans PUBLIC "-//SPRING/DTD BEAN//EN"
+"http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+    <bean id = "s" class = "beans.StaticStudent"/>
+    
+    <bean class="org.springframework.beans.factory.config.MethodInvokingFactoryBean" >
+        <property name="staticMethod" value="beans.StaticStudent.setName/>
+            <property name="arguments">
+                <list>
+                    <value>Indranil</value>
+                </list>
+            </property>
+    </bean>
+</beans>

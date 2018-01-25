@@ -1,0 +1,9 @@
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN"
+"http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+    <bean id ="cdi" class="beans.ConstructorDI">
+        <constructor-arg value="26" type="int" index="1"/>
+        <constructor-arg value="Indranil" type="java.lang.String" index="0"/>
+        <constructor-arg value="ibwelcomesyouall@gmail.com" type="java.lang.String" index="2"/>
+    </bean>
+</beans>

@@ -1,0 +1,8 @@
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name ="beans.New_User" table="new_users">
+        <id name="uid"/>
+        <property name ="name"/>
+        <property name ="marks"/>
+    </class>
+</hibernate-mapping>

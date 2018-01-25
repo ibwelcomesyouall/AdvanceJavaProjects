@@ -1,0 +1,12 @@
+CREATE DATABASE jlcdb;
+
+USE jlcdb;
+
+CREATE TABLE jlcusers(
+userid int primary key,
+fullname varchar(30),
+email varchar(50),
+phone long,
+username varchar(15) unique,
+password varchar(15)
+);

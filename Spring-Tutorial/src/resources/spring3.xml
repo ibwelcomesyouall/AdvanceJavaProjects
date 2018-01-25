@@ -1,0 +1,12 @@
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN"
+"http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+    <bean id ="sdic" class="beans.SetterDI_forSecondary_datatypes_Car">
+        <property name="carname" value="Audi"/>
+        <property name="engine" >
+            <bean class="beans.SetterDI_forSecondary_datatypes_Engine">
+                <property name="modelyear" value="2016"/>
+            </bean>
+        </property>
+    </bean>
+</beans>

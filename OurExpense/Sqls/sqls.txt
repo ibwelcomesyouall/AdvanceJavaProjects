@@ -1,0 +1,162 @@
+-- Command to create a database
+create database OurExpense;
+-- Command to drop a database
+drop database OurExpense;
+drop user OurExpense;
+use master;
+
+--Command to use database
+use OurExpense;
+
+
+CREATE login OurExpense WITH PASSWORD='OurExpense';
+CREATE user OurExpense FOR LOGIN OurExpense;
+
+GRANT SELECT,INSERT,UPDATE TO OurExpense;
+
+use master;
+
+
+GRANT SELECT,INSERT,UPDATE TO OurExpense;
+
+CREATE user OurExpense FOR LOGIN OurExpense;
+
+use master;
+
+
+create table Validator (TransactionID bigint NOT NULL UNIQUE,RoommateID int NOT NULL,ValidatorID int NOT NULL);
+create table TotalExpense(RoommateID int NOT NULL PRIMARY KEY,
+TotalExpenseCost int);
+
+
+create table ExpenseLog ( RoommateID int NOT NULL,
+TransactionID bigint NOT NULL PRIMARY KEY,
+Purchasedate nvarchar(15),
+ExpenseLogDetail nvarchar(500),
+Price float,
+Valid char);
+
+alter table ExpenseLog add constraint fk_to_roommates FOREIGN KEY (RoommateID) references Roommates(RoommateID);
+
+--Command to create a table
+create table Roommates 
+(RoommateID int NOT NULL IDENTITY(1,1),
+FirstName varchar(50),
+MiddleName varchar(50),
+LastName varchar(50),
+Sex char,
+Password varchar(10));
+
+-- The below alter is for creating a PRIMARY KEY CONSTRAINT
+Alter table Roommates add constraint Roommates_primary PRIMARY KEY (RoommateID);
+
+alter table TotalExpense add constraint fk_to_roommates1 FOREIGN KEY (RoommateID) references Roommates(RoommateID);
+
+CREATE Procedure TotalExpense_update
+@tid bigint,
+@validID int,
+@cust_ID int,
+@Amt float(10)
+as
+BEGIN
+UPDATE ExpenseLog SET Valid='Y' WHERE RoommateID=@validID and TransactionID =@tid;
+UPDATE TotalExpense SET TotalExpenseCost=TotalExpenseCost-5*(@Amt/6) WHERE RoommateID=@validID;
+UPDATE TotalExpense SET TotalExpenseCost=TotalExpenseCost+(@Amt/6) WHERE RoommateID!=@validID;
+insert into Validator values(@tid,@validID,@cust_ID);
+END;
+
+CREATE Procedure Expense_Rejection
+@tid bigint,
+@validID int,
+@cust_ID int
+AS
+BEGIN
+UPDATE ExpenseLog SET Valid='R' WHERE RoommateID=@validID and TransactionID =@tid;
+insert into Rejector values(@tid,@validID,@cust_ID);
+END;
+
+create table Rejector (TransactionID bigint NOT NULL UNIQUE,RoommateID int NOT NULL,RejectorID int NOT NULL);
+
+
+
+select * from ExpenseLog
+
+insert into ExpenseLog 
+(RoommateID,TransactionID ,Purchasedate,ExpenseLogDetail,Price,Valid) values
+(1,FLOOR(RAND()*POWER(CAST(10 as BIGINT),10)),'11-11-1989','Coffee',100,'N');
+
+select * from ExpenseLog
+update ExpenseLog SET Valid='N'
+select * from Rejector
+
+select * from TotalExpense
+insert into TotalExpense values(1,0)
+insert into TotalExpense values(2,0)
+insert into TotalExpense values(3,0)
+insert into TotalExpense values(4,0)
+insert into TotalExpense values(5,0)
+insert into TotalExpense values(7,0)
+
+select * from validator
+
+drop procedure TotalExpense_update
+
+select TotalExpenseCost/5 from TotalExpense;
+
+select * from Roommates
+alter table ExpenseLog add constraint fk_to_roommates FOREIGN KEY (RoommateID) references Roommates(RoommateID);
+
+update Roommates set LastName='Bose', Password='Jan@2016' where RoommateID=2;
+
+select b.*,a.FirstName from ExpenseLog b,Roommates a where b.Valid='N' and b.RoommateID not in ('"+roomID+"')
+and a.RoommateID=b.RoommateID
+
+select a.Purchasedate,
+a.ExpenseLogDetail,
+a.Price,
+a.Valid,
+a.RoommateID, (select x.FirstName from Roommates x where x.RoommateID =
+CASE WHEN EXISTS ( SELECT b.ValidatorID FROM Validator b where a.TransactionID=b.TransactionID )
+THEN ( SELECT b.ValidatorID FROM Validator b where a.TransactionID=b.TransactionID )
+ELSE ( SELECT c.ValidatorID FROM Rejector c where a.TransactionID=c.TransactionID )
+END) as 'Validator/Rejector'
+from ExpenseLog a
+where a.Purchasedate like '2016-08-%';
+
+create table Validator_History (Pdate nvarchar(15),TransactionID bigint,RoommateID int,ValidatorID int);
+create table TotalExpense_History(Pdate nvarchar(15),RoommateID int,
+TotalExpenseCost int);
+create table ExpenseLog_History ( RoommateID int,
+TransactionID bigint,
+Purchasedate nvarchar(15),
+ExpenseLogDetail nvarchar(500),
+Price float,
+Valid char);
+create table Rejector_History (Pdate nvarchar(15),TransactionID bigint,RoommateID int,RejectorID int);
+
+CREATE Procedure Monthly_Settlement
+AS
+BEGIN
+INSERT INTO Validator_History (TransactionID,RoommateID,ValidatorID)SELECT TransactionID,RoommateID,ValidatorID FROM Validator
+Update Validator_History set pdate = cast(YEAR(GETDATE()) as varchar)+'-'+ cast(MONTH(GETDATE()) as varchar) where pdate is NULL 
+INSERT INTO Rejector_History (TransactionID,RoommateID,RejectorID)SELECT TransactionID,RoommateID,RejectorID FROM Rejector
+Update Rejector_History set pdate = cast(YEAR(GETDATE()) as varchar)+'-'+ cast(MONTH(GETDATE()) as varchar) where pdate is NULL 
+INSERT INTO TotalExpense_History (RoommateID,TotalExpenseCost)SELECT RoommateID,TotalExpenseCost FROM TotalExpense
+Update TotalExpense_History set pdate = cast(YEAR(GETDATE()) as varchar)+'-'+ cast(MONTH(GETDATE()) as varchar) where pdate is NULL 
+INSERT INTO ExpenseLog_History SELECT * FROM ExpenseLog where Purchasedate like cast(YEAR(GETDATE()) as varchar)+'-'+ RIGHT('0'+cast(MONTH(GETDATE()) as varchar),2)+'%'
+delete Validator
+delete Rejector
+delete ExpenseLog where Purchasedate like cast(YEAR(GETDATE()) as varchar)+'-'+ RIGHT('0'+cast(MONTH(GETDATE()) as varchar),2)+'%'
+delete TotalExpense
+insert into TotalExpense values (1,0)
+insert into TotalExpense values (2,0)
+insert into TotalExpense values (3,0)
+insert into TotalExpense values (4,0)
+insert into TotalExpense values (5,0)
+insert into TotalExpense values (7,0)
+END;
+
+For Settlement ...
+exec Monthly_Settlement;
+
+
