@@ -8,7 +8,6 @@
     <servlet-name>HelloServlet</servlet-name>
     <url-pattern>/HelloServlet</url-pattern>
   </servlet-mapping>
-  
   <servlet>
     <servlet-name>PostParametersServlet</servlet-name>
     <servlet-class>org.indranil.servlets.PostParametersServlet</servlet-class>
@@ -17,7 +16,6 @@
     <servlet-name>PostParametersServlet</servlet-name>
     <url-pattern>/PostParametersServlet</url-pattern>
   </servlet-mapping>
-  
   <servlet>
     <servlet-name>ColorGetServlet</servlet-name>
     <servlet-class>org.indranil.servlets.ColorGetServlet</servlet-class>
@@ -26,7 +24,6 @@
     <servlet-name>ColorGetServlet</servlet-name>
     <url-pattern>/ColorGetServlet</url-pattern>
   </servlet-mapping>
-  
   <servlet>
     <servlet-name>ColorPostServlet</servlet-name>
     <servlet-class>org.indranil.servlets.ColorPostServlet</servlet-class>
@@ -35,7 +32,6 @@
     <servlet-name>ColorPostServlet</servlet-name>
     <url-pattern>/ColorPostServlet</url-pattern>
   </servlet-mapping>
-  
   <servlet>
     <servlet-name>AddCookieServlet</servlet-name>
     <servlet-class>org.indranil.servlets.AddCookieServlet</servlet-class>
@@ -44,7 +40,6 @@
     <servlet-name>AddCookieServlet</servlet-name>
     <url-pattern>/AddCookieServlet</url-pattern>
   </servlet-mapping>
-  
   <servlet>
     <servlet-name>GetCookieServlet</servlet-name>
     <servlet-class>org.indranil.servlets.GetCookieServlet</servlet-class>
@@ -53,7 +48,6 @@
     <servlet-name>GetCookieServlet</servlet-name>
     <url-pattern>/GetCookieServlet</url-pattern>
   </servlet-mapping>
-  
   <servlet>
     <servlet-name>DateServlet</servlet-name>
     <servlet-class>org.indranil.servlets.DateServlet</servlet-class>
@@ -62,5 +56,4 @@
     <servlet-name>DateServlet</servlet-name>
     <url-pattern>/DateServlet</url-pattern>
   </servlet-mapping>
-  
 </web-app>
