@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/JsonParser@Libs"/>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="lib" path="F:/Study/Java Programming Codes/IMP Project Jars - Don&apos;t Delete/org-apache-commons-codec.jar"/>
+	<classpathentry kind="lib" path="F:/Study/Java Programming Codes/IMP Project Jars - Don&apos;t Delete/sqljdbc42.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
